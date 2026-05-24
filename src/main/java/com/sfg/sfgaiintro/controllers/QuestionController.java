@@ -1,6 +1,7 @@
 package com.sfg.sfgaiintro.controllers;
 
 import com.sfg.sfgaiintro.model.Answer;
+import com.sfg.sfgaiintro.model.GetCapitalRequest;
 import com.sfg.sfgaiintro.model.Question;
 import com.sfg.sfgaiintro.services.OpenAIService;
 import jakarta.websocket.server.PathParam;
@@ -16,6 +17,11 @@ public class QuestionController {
 
     @Autowired
     private OpenAIService openAIService;
+
+    @PostMapping(path="/get-capital")
+    public Answer getCapital(@RequestBody GetCapitalRequest stateOrCountry) {
+        return openAIService.getCapital(stateOrCountry);
+    }
 
     @PostMapping(path = "/ask")
     public Answer getAnswer(@RequestBody Question question) {

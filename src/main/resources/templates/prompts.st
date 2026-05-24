@@ -1,0 +1,1 @@
+get-capital-prompt=what is the capital of {stateOrCountry}?
