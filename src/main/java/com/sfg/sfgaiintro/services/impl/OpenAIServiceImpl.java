@@ -1,5 +1,6 @@
 package com.sfg.sfgaiintro.services.impl;
 
+import tools.jackson.databind.json.JsonMapper;
 import com.sfg.sfgaiintro.model.Answer;
 import com.sfg.sfgaiintro.model.GetCapitalRequest;
 import com.sfg.sfgaiintro.model.PromptsConfig;
@@ -17,14 +18,14 @@ import java.util.Map;
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
+    @Autowired
     private ChatModel chatModel;
 
     @Autowired
     private PromptsConfig promptsConfig;
 
-    public OpenAIServiceImpl(ChatModel chatModel) {
-        this.chatModel = chatModel;
-    }
+    @Autowired
+    private JsonMapper jsonMapper;
 
     @Override
     public String getAnswer(String question) {
@@ -43,10 +44,10 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     @Override
     public Answer getCapital(GetCapitalRequest stateOrCountry) {
-        PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalPrompt);
+        PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalPromptJson);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry()));
         ChatResponse chatResponse = chatModel.call(prompt);
-        return new Answer(chatResponse.getResult().getOutput().getText());
+        return jsonMapper.readValue(chatResponse.getResult().getOutput().getText(), Answer.class);
     }
 
     @Override

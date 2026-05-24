@@ -6,3 +6,4 @@ get-capital-with-info=${get-capital-prompt} \
     The city is located in ```region```. \
     The primary language spoken is ```language```. \
     The currency used is ```currency```.
+get-capital-prompt-json=${get-capital-prompt} Response in JSON format without markdown tags with the name of the city in a property named `answer`.

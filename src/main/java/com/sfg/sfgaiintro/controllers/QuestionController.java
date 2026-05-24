@@ -4,12 +4,13 @@ import com.sfg.sfgaiintro.model.Answer;
 import com.sfg.sfgaiintro.model.GetCapitalRequest;
 import com.sfg.sfgaiintro.model.Question;
 import com.sfg.sfgaiintro.services.OpenAIService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/questions-api")
