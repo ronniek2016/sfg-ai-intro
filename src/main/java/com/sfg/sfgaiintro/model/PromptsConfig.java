@@ -10,4 +10,7 @@ public class PromptsConfig {
 
     @Value("${get-capital-prompt}")
     public String getCapitalPrompt;
+
+    @Value("${get-capital-with-info}")
+    public String getCapitalWithInfo;
 }

@@ -48,4 +48,12 @@ public class OpenAIServiceImpl implements OpenAIService {
         ChatResponse chatResponse = chatModel.call(prompt);
         return new Answer(chatResponse.getResult().getOutput().getText());
     }
+
+    @Override
+    public Answer getCapitalWithInfo(GetCapitalRequest stateOrCountry) {
+        PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalWithInfo);
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry()));
+        ChatResponse chatResponse = chatModel.call(prompt);
+        return new Answer(chatResponse.getResult().getOutput().getText());
+    }
 }

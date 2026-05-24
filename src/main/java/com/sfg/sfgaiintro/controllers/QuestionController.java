@@ -23,6 +23,11 @@ public class QuestionController {
         return openAIService.getCapital(stateOrCountry);
     }
 
+    @PostMapping(path="/get-capital-info")
+    public Answer getCapitalWithInfo(@RequestBody GetCapitalRequest stateOrCountry) {
+        return openAIService.getCapitalWithInfo(stateOrCountry);
+    }
+
     @PostMapping(path = "/ask")
     public Answer getAnswer(@RequestBody Question question) {
         return openAIService.getAnswer(question);

@@ -11,4 +11,6 @@ public interface OpenAIService {
     Answer getAnswer(Question question);
 
     Answer getCapital(GetCapitalRequest stateOrCountry);
+
+    Answer getCapitalWithInfo(GetCapitalRequest stateOrCountry);
 }
