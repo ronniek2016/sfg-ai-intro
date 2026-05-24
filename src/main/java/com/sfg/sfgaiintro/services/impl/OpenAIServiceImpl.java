@@ -1,5 +1,7 @@
 package com.sfg.sfgaiintro.services.impl;
 
+import com.sfg.sfgaiintro.model.Answer;
+import com.sfg.sfgaiintro.model.Question;
 import com.sfg.sfgaiintro.services.OpenAIService;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -25,5 +27,9 @@ public class OpenAIServiceImpl implements OpenAIService {
         ChatResponse chatResponse = chatModel.call(prompt);
 
         return chatResponse.getResult().getOutput().getText();
+    }
+
+    public Answer getAnswer(Question question) {
+        return new Answer(getAnswer(question.question()));
     }
 }
