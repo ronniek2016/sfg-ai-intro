@@ -1,8 +1,6 @@
 package com.sfg.sfgaiintro.controllers;
 
-import com.sfg.sfgaiintro.model.Answer;
-import com.sfg.sfgaiintro.model.GetCapitalRequest;
-import com.sfg.sfgaiintro.model.Question;
+import com.sfg.sfgaiintro.model.*;
 import com.sfg.sfgaiintro.services.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +18,12 @@ public class QuestionController {
     private OpenAIService openAIService;
 
     @PostMapping(path="/get-capital")
-    public Answer getCapital(@RequestBody GetCapitalRequest stateOrCountry) {
+    public GetCapitalResponse getCapital(@RequestBody GetCapitalRequest stateOrCountry) {
         return openAIService.getCapital(stateOrCountry);
     }
 
     @PostMapping(path="/get-capital-info")
-    public Answer getCapitalWithInfo(@RequestBody GetCapitalRequest stateOrCountry) {
+    public GetCapitalInfoResponse getCapitalWithInfo(@RequestBody GetCapitalRequest stateOrCountry) {
         return openAIService.getCapitalWithInfo(stateOrCountry);
     }
 

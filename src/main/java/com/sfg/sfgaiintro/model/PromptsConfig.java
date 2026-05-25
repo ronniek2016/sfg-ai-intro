@@ -16,4 +16,7 @@ public class PromptsConfig {
 
     @Value("${get-capital-prompt-json}")
     public String getCapitalPromptJson;
+
+    @Value("${get-capital-with-info-json}")
+    public String getCapitalWithInfoJson;
 }

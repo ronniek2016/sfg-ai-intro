@@ -1,8 +1,6 @@
 package com.sfg.sfgaiintro.services;
 
-import com.sfg.sfgaiintro.model.Answer;
-import com.sfg.sfgaiintro.model.GetCapitalRequest;
-import com.sfg.sfgaiintro.model.Question;
+import com.sfg.sfgaiintro.model.*;
 
 public interface OpenAIService {
 
@@ -10,7 +8,7 @@ public interface OpenAIService {
 
     Answer getAnswer(Question question);
 
-    Answer getCapital(GetCapitalRequest stateOrCountry);
+    GetCapitalResponse getCapital(GetCapitalRequest stateOrCountry);
 
-    Answer getCapitalWithInfo(GetCapitalRequest stateOrCountry);
+    GetCapitalInfoResponse getCapitalWithInfo(GetCapitalRequest stateOrCountry);
 }

@@ -1,10 +1,8 @@
 package com.sfg.sfgaiintro.services.impl;
 
+import com.sfg.sfgaiintro.model.*;
+import org.springframework.ai.converter.BeanOutputConverter;
 import tools.jackson.databind.json.JsonMapper;
-import com.sfg.sfgaiintro.model.Answer;
-import com.sfg.sfgaiintro.model.GetCapitalRequest;
-import com.sfg.sfgaiintro.model.PromptsConfig;
-import com.sfg.sfgaiintro.model.Question;
 import com.sfg.sfgaiintro.services.OpenAIService;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
@@ -43,18 +42,22 @@ public class OpenAIServiceImpl implements OpenAIService {
     }
 
     @Override
-    public Answer getCapital(GetCapitalRequest stateOrCountry) {
+    public GetCapitalResponse getCapital(GetCapitalRequest stateOrCountry) {
+        BeanOutputConverter<GetCapitalResponse> converter = new BeanOutputConverter<>(GetCapitalResponse.class);
         PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalPromptJson);
-        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry()));
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry()
+                , "format", converter.getFormat()));
         ChatResponse chatResponse = chatModel.call(prompt);
-        return jsonMapper.readValue(chatResponse.getResult().getOutput().getText(), Answer.class);
+        return converter.convert(Objects.requireNonNull(chatResponse.getResult().getOutput().getText()));
     }
 
     @Override
-    public Answer getCapitalWithInfo(GetCapitalRequest stateOrCountry) {
-        PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalWithInfo);
-        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry()));
+    public GetCapitalInfoResponse getCapitalWithInfo(GetCapitalRequest stateOrCountry) {
+        BeanOutputConverter<GetCapitalInfoResponse> converter = new BeanOutputConverter<>(GetCapitalInfoResponse.class);
+        PromptTemplate promptTemplate = new PromptTemplate(promptsConfig.getCapitalWithInfoJson);
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry.stateOrCountry(),
+                "format", converter.getFormat()));
         ChatResponse chatResponse = chatModel.call(prompt);
-        return new Answer(chatResponse.getResult().getOutput().getText());
+        return converter.convert(Objects.requireNonNull(chatResponse.getResult().getOutput().getText()));
     }
 }
